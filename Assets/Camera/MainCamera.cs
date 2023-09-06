@@ -17,8 +17,12 @@ public class MainCamera : MonoBehaviour
     public float cameraX_speed_rate = 1f;//カメラX軸の速度割合
     [SerializeField]float cameraX_accel_rate = 1f;//カメラX軸の加速度割合
     public float cameraY_speed_rate = 1f;//カメラY軸の速度割合
+    [SerializeField]float cameraY_accel_rate = 1f;//カメラX軸の加速度割合
+
+    [SerializeField]bool accel_flag = true;
 
     float camera_x = 0;
+    float camera_y = 0;
 
     float Xx = 1f;
     float Yx = 1f;
@@ -30,6 +34,7 @@ public class MainCamera : MonoBehaviour
 
         //初期化
         camera_ang = 270;
+        this.transform.localPosition = - Vector3.forward * camera_length;
 
     }
 
@@ -41,58 +46,73 @@ public class MainCamera : MonoBehaviour
         float Mouse_Y = Input.GetAxis("Mouse Y");
 
         //カメラ左右視点移動
-        CameraMoveLR(Mouse_X);
+        CameraMove(Mouse_X,Mouse_Y);
 
-        //カメラ上下視点移動
-        CameraLookUpDown(Mouse_Y);
-        
 
         this.transform.LookAt(CameraLook.transform.position);
     }
 
-    void CameraMoveLR(float mx)
+    void CameraMove(float mx ,float my)
     {
+        Vector3 Camera_Pos = this.transform.localPosition;
 
         Xx += 0.001f;
         Xx -= Mathf.Abs(mx);
-        Xx = Mathf.Clamp(Xx, 0.85f, 1f);
+        Xx = Mathf.Clamp(Xx, 0.8f, 1f);
 
         if (mx != 0)
         {
             camera_x = mx > 0 ? cameraX_accel_rate : -cameraX_accel_rate;
         }
+
+        if (accel_flag)
+        {
+            //加速度あり
+            camera_ang -= mx * cameraX_speed_rate + camera_x * Log(Xx);
+        }
+        else
+        {
+            //加速度なし
+            camera_ang -= mx * cameraX_speed_rate;
+        }
+
         
-        camera_ang -=mx * cameraX_speed_rate + camera_x * Log(Xx);
 
-        Debug.Log(Log(Xx));
-        //Debug.Log(camera_ang);
+        Yx += 0.001f;
+        Yx -= Mathf.Abs(my);
+        Yx = Mathf.Clamp(Yx, 0.8f, 1f);
 
-        Vector3 Camera_Pos = this.transform.localPosition;
-
-        Camera_Pos.x = Mathf.Cos(camera_ang) * camera_length;
-        Camera_Pos.z = Mathf.Sin(camera_ang) * camera_length;
-
-        this.transform.localPosition = Camera_Pos;
-
-        
-    }
-
-    void CameraLookUpDown(float my)
-    {
-        Vector3 Camera_Pos = this.transform.localPosition;
+        if (my != 0)
+        {
+            camera_y = my > 0 ? cameraY_accel_rate : -cameraY_accel_rate;
+        }
 
         //Cameraの上下移動
-        Camera_Pos.y += my * cameraY_speed_rate;
+        if (accel_flag)
+        {
+            //加速度あり
+            Camera_Pos.y -= my * cameraY_speed_rate + camera_y * Log(Yx);
+        }
+        else
+        {
+            //加速度なし
+            Camera_Pos.y -= my * cameraY_speed_rate;
+        }
+
+
         Camera_Pos.y = Mathf.Clamp(Camera_Pos.y, cameraY_min, cameraY_max);
+
+        float LookAt_to_Camera = CameraLook.transform.localPosition.y - Camera_Pos.y;
+        LookAt_to_Camera  = Mathf.Cos(Mathf.Asin(LookAt_to_Camera / camera_length)) * camera_length;
+
+        Camera_Pos.x = Mathf.Cos(camera_ang) * LookAt_to_Camera;
+        Camera_Pos.z = Mathf.Sin(camera_ang) * LookAt_to_Camera;
 
         this.transform.localPosition = Camera_Pos;
 
+        
     }
 
-    float Sigmoid(float x)
-    {
-        return 1/(1+Mathf.Exp(2*x))-0.5f;
-    }
 
     float Log(float x)
     {
