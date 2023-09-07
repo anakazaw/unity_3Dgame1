@@ -664,8 +664,6 @@ MonoBehaviour:
   camera_length: 5
   cameraY_max: 4
   cameraY_min: 0.2
-  cameraX_speed_rate: 0.1
-  cameraX_accel_rate: 0.01
-  cameraY_speed_rate: 0.5
-  cameraY_accel_rate: 0.01
-  accel_flag: 0
+  cameraX_speed_rate: 1
+  cameraY_speed_rate: 1
+  multiple_flag: 1
