@@ -667,3 +667,4 @@ MonoBehaviour:
   cameraX_speed_rate: 1
   cameraY_speed_rate: 1
   multiple_flag: 1
+  sphere_flag: 0
