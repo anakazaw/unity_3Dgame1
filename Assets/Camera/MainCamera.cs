@@ -18,11 +18,7 @@ public class MainCamera : MonoBehaviour
     public float cameraX_speed_rate = 1f;//カメラX軸の速度割合
     public float cameraY_speed_rate = 1f;//カメラY軸の速度割合
 
-<<<<<<< Updated upstream
-    [SerializeField,Tooltip("二乗曲線")]bool multiple_flag = true;
-=======
     [SerializeField,Tooltip("なめらかに動かす")]bool smooth_flag = true;
->>>>>>> Stashed changes
     [SerializeField, Tooltip("球状に移動する")] bool sphere_flag = false;
 
     // Start is called before the first frame update
@@ -31,12 +27,7 @@ public class MainCamera : MonoBehaviour
         if (CameraLook == null) Debug.Log("CameraLookがない");
 
         //初期化
-<<<<<<< Updated upstream
-        camera_ang = 270;
-        this.transform.localPosition = - Vector3.forward * camera_length;
-=======
         this.transform.position = CameraLook.transform.position - Vector3.forward * camera_length;
->>>>>>> Stashed changes
 
     }
 
@@ -56,14 +47,6 @@ public class MainCamera : MonoBehaviour
 
     void CameraMove(float mx ,float my)
     {
-<<<<<<< Updated upstream
-        Vector3 Camera_Pos = this.transform.localPosition;
-
-        //Camera横移動
-        if (multiple_flag)
-        {
-            //二乗曲線
-=======
         Vector3 CameraLook_Pos = CameraLook.transform.position;
         Vector3 Camera_Pos = Vector3.zero;
 
@@ -71,7 +54,6 @@ public class MainCamera : MonoBehaviour
         if (smooth_flag)
         {
             //smooth (smooth damp)
->>>>>>> Stashed changes
             camera_ang -= cameraX_speed_rate * multiply(mx);
         }
         else
@@ -82,60 +64,25 @@ public class MainCamera : MonoBehaviour
         
 
         //Cameraの上下移動
-<<<<<<< Updated upstream
-        if (multiple_flag)
-        {
-            //二乗曲線
-            Camera_Pos.y -= cameraY_speed_rate * multiply(my);
-=======
         if (smooth_flag)
         {
             //smooth (smooth damp)
             camera_height -= cameraY_speed_rate * multiply(my);
->>>>>>> Stashed changes
         }
         else
         {
             //リニア
-<<<<<<< Updated upstream
-            Camera_Pos.y -= my * cameraY_speed_rate;
-        }
-
-
-        Camera_Pos.y = Mathf.Clamp(Camera_Pos.y, cameraY_min, cameraY_max);
-=======
             camera_height -= my * cameraY_speed_rate;
         }
 
         camera_height = Mathf.Clamp(camera_height, cameraY_min, cameraY_max);//高さを制限
 
->>>>>>> Stashed changes
 
         float LookAt_to_Camera = camera_length;
 
         if (sphere_flag)
         {
             //球状に移動
-<<<<<<< Updated upstream
-            LookAt_to_Camera = CameraLook.transform.localPosition.y - Camera_Pos.y;
-            LookAt_to_Camera  = Mathf.Cos(Mathf.Asin(LookAt_to_Camera / camera_length)) * camera_length;
-        
-        }
- 
-        Camera_Pos.x = Mathf.Cos(camera_ang) * LookAt_to_Camera;
-        Camera_Pos.z = Mathf.Sin(camera_ang) * LookAt_to_Camera;
-
-        this.transform.localPosition = Camera_Pos;
-
-        
-    }
-
-    float multiply(float x)
-    {
-        return x*Mathf.Abs(x);
-    }
-
-=======
             LookAt_to_Camera = camera_height;
             LookAt_to_Camera  = Mathf.Cos(Mathf.Asin(LookAt_to_Camera / camera_length)) * camera_length;
         
@@ -156,5 +103,4 @@ public class MainCamera : MonoBehaviour
         return x*Mathf.Abs(x);
     }
 
->>>>>>> Stashed changes
 }
