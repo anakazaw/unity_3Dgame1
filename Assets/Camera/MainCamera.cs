@@ -9,19 +9,21 @@ public class MainCamera : MonoBehaviour
 
 
     public float camera_length = 2f;//プレイヤーからのカメラの引き具合
-    float camera_ang;//プレイヤーからの角度
+    [SerializeField]float camera_ang = 270f;//プレイヤーからの角度
+    [SerializeField]float camera_height = 2.2f;//プレイヤーの頭上からの高さ
 
     [SerializeField]float cameraY_max = 1f;//CameraのY軸の最大値
     [SerializeField]float cameraY_min = -1f;//CameraのY軸の最小値
 
     public float cameraX_speed_rate = 1f;//カメラX軸の速度割合
-    [SerializeField]float cameraX_accel_rate = 1f;//カメラX軸の加速度割合
     public float cameraY_speed_rate = 1f;//カメラY軸の速度割合
 
-    float camera_x = 0;
-
-    float Xx = 1f;
-    float Yx = 1f;
+<<<<<<< Updated upstream
+    [SerializeField,Tooltip("二乗曲線")]bool multiple_flag = true;
+=======
+    [SerializeField,Tooltip("なめらかに動かす")]bool smooth_flag = true;
+>>>>>>> Stashed changes
+    [SerializeField, Tooltip("球状に移動する")] bool sphere_flag = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,73 +31,130 @@ public class MainCamera : MonoBehaviour
         if (CameraLook == null) Debug.Log("CameraLookがない");
 
         //初期化
+<<<<<<< Updated upstream
         camera_ang = 270;
+        this.transform.localPosition = - Vector3.forward * camera_length;
+=======
+        this.transform.position = CameraLook.transform.position - Vector3.forward * camera_length;
+>>>>>>> Stashed changes
 
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //マウスのx軸、y軸取得
         float Mouse_X = Input.GetAxis("Mouse X");
         float Mouse_Y = Input.GetAxis("Mouse Y");
 
         //カメラ左右視点移動
-        CameraMoveLR(Mouse_X);
+        CameraMove(Mouse_X,Mouse_Y);
 
-        //カメラ上下視点移動
-        CameraLookUpDown(Mouse_Y);
-        
 
         this.transform.LookAt(CameraLook.transform.position);
     }
 
-    void CameraMoveLR(float mx)
+    void CameraMove(float mx ,float my)
     {
+<<<<<<< Updated upstream
+        Vector3 Camera_Pos = this.transform.localPosition;
 
-        Xx += 0.001f;
-        Xx -= Mathf.Abs(mx);
-        Xx = Mathf.Clamp(Xx, 0.85f, 1f);
-
-        if (mx != 0)
+        //Camera横移動
+        if (multiple_flag)
         {
-            camera_x = mx > 0 ? cameraX_accel_rate : -cameraX_accel_rate;
+            //二乗曲線
+=======
+        Vector3 CameraLook_Pos = CameraLook.transform.position;
+        Vector3 Camera_Pos = Vector3.zero;
+
+        //Camera横移動
+        if (smooth_flag)
+        {
+            //smooth (smooth damp)
+>>>>>>> Stashed changes
+            camera_ang -= cameraX_speed_rate * multiply(mx);
+        }
+        else
+        {
+            //リニア
+            camera_ang -= mx * cameraX_speed_rate;
         }
         
-        camera_ang -=mx * cameraX_speed_rate + camera_x * Log(Xx);
 
-        Debug.Log(Log(Xx));
-        //Debug.Log(camera_ang);
+        //Cameraの上下移動
+<<<<<<< Updated upstream
+        if (multiple_flag)
+        {
+            //二乗曲線
+            Camera_Pos.y -= cameraY_speed_rate * multiply(my);
+=======
+        if (smooth_flag)
+        {
+            //smooth (smooth damp)
+            camera_height -= cameraY_speed_rate * multiply(my);
+>>>>>>> Stashed changes
+        }
+        else
+        {
+            //リニア
+<<<<<<< Updated upstream
+            Camera_Pos.y -= my * cameraY_speed_rate;
+        }
 
-        Vector3 Camera_Pos = this.transform.localPosition;
 
-        Camera_Pos.x = Mathf.Cos(camera_ang) * camera_length;
-        Camera_Pos.z = Mathf.Sin(camera_ang) * camera_length;
+        Camera_Pos.y = Mathf.Clamp(Camera_Pos.y, cameraY_min, cameraY_max);
+=======
+            camera_height -= my * cameraY_speed_rate;
+        }
+
+        camera_height = Mathf.Clamp(camera_height, cameraY_min, cameraY_max);//高さを制限
+
+>>>>>>> Stashed changes
+
+        float LookAt_to_Camera = camera_length;
+
+        if (sphere_flag)
+        {
+            //球状に移動
+<<<<<<< Updated upstream
+            LookAt_to_Camera = CameraLook.transform.localPosition.y - Camera_Pos.y;
+            LookAt_to_Camera  = Mathf.Cos(Mathf.Asin(LookAt_to_Camera / camera_length)) * camera_length;
+        
+        }
+ 
+        Camera_Pos.x = Mathf.Cos(camera_ang) * LookAt_to_Camera;
+        Camera_Pos.z = Mathf.Sin(camera_ang) * LookAt_to_Camera;
 
         this.transform.localPosition = Camera_Pos;
 
         
     }
 
-    void CameraLookUpDown(float my)
+    float multiply(float x)
     {
-        Vector3 Camera_Pos = this.transform.localPosition;
-
-        //Cameraの上下移動
-        Camera_Pos.y += my * cameraY_speed_rate;
-        Camera_Pos.y = Mathf.Clamp(Camera_Pos.y, cameraY_min, cameraY_max);
-
-        this.transform.localPosition = Camera_Pos;
-
+        return x*Mathf.Abs(x);
     }
 
-    float Sigmoid(float x)
-    {
-        return 1/(1+Mathf.Exp(2*x))-0.5f;
+=======
+            LookAt_to_Camera = camera_height;
+            LookAt_to_Camera  = Mathf.Cos(Mathf.Asin(LookAt_to_Camera / camera_length)) * camera_length;
+        
+        }
+
+        Camera_Pos.x = Mathf.Cos(camera_ang);
+        Camera_Pos.z = Mathf.Sin(camera_ang);
+        Camera_Pos *= LookAt_to_Camera;
+
+        Camera_Pos.y = camera_height;
+
+        this.transform.position = Camera_Pos + CameraLook_Pos;
+       
     }
 
-    float Log(float x)
+    float multiply(float x)
     {
-        return -Mathf.Log(x);
+        return x*Mathf.Abs(x);
     }
+
+>>>>>>> Stashed changes
 }
