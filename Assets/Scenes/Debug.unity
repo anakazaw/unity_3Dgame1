@@ -219,11 +219,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-<<<<<<< Updated upstream
-  m_RootOrder: 3
-=======
   m_RootOrder: 4
->>>>>>> Stashed changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1207530765
 GameObject:
@@ -460,24 +456,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.435583
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalPosition.y
-<<<<<<< Updated upstream
-      value: 0.000000059604645
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.1354103
-=======
       value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.272
->>>>>>> Stashed changes
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -485,15 +485,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -507,13 +507,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< Updated upstream
-=======
     - target: {fileID: -8679921383154817045, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
->>>>>>> Stashed changes
     - target: {fileID: 919132149155446097, guid: d9a5dbf6447a9cf4480ccb95c34342f3, type: 3}
       propertyPath: m_Name
       value: unity_first_humanoid
@@ -581,11 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 2139350035}
-<<<<<<< Updated upstream
-  player_speed: 0.1
-=======
   player_speed: 0.01
->>>>>>> Stashed changes
 --- !u!1 &2139350035
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,21 +657,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139350035}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-<<<<<<< Updated upstream
-  m_LocalPosition: {x: 0, y: 2.2, z: -5}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1811075853}
-  m_RootOrder: 3
-=======
   m_LocalPosition: {x: 7.435583, y: 1.12, z: -1.272}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
->>>>>>> Stashed changes
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2139350039
 MonoBehaviour:
@@ -693,14 +677,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraLook: {fileID: 1235870738}
-<<<<<<< Updated upstream
-  camera_length: 5
-  cameraY_max: 4
-  cameraY_min: 0.2
-  cameraX_speed_rate: 1
-  cameraY_speed_rate: 1
-  multiple_flag: 1
-=======
   camera_length: 3
   camera_ang: 270
   camera_height: 1
@@ -709,5 +685,4 @@ MonoBehaviour:
   cameraX_speed_rate: 1
   cameraY_speed_rate: 1
   smooth_flag: 1
->>>>>>> Stashed changes
   sphere_flag: 0
